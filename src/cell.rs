@@ -4,24 +4,24 @@ use std::{
 };
 
 #[derive(Clone, Copy)]
-pub enum Cell {
+pub enum Cell<V> {
     Bomb,
-    Empty(usize),
+    Empty(V),
 }
 
-impl TryFrom<u8> for Cell {
+impl TryFrom<u8> for Cell<char> {
     type Error = &'static str;
 
     fn try_from(byte: u8) -> Result<Self, Self::Error> {
         match byte {
-            b'.' => Ok(Cell::Empty(0)),
+            b'.' => Ok(Cell::Empty(b'.' as char)),
             b'*' => Ok(Cell::Bomb),
             _ => Err("Invalid cell"),
         }
     }
 }
 
-impl Display for Cell {
+impl<V: Display> Display for Cell<V> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         let symbol = match self {
             Cell::Bomb => "*".to_string(),
