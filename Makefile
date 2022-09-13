@@ -1,5 +1,8 @@
+# Couldn't use PATH
+BOARD_PATH?=./example.txt
+
 run:
-	cargo run --release
+	cargo run --release ${BOARD_PATH}
 
 build_image:
 	docker build -t minesweeper .
