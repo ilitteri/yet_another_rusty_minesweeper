@@ -53,7 +53,7 @@ impl TryFrom<PathBuf> for Grid<char> {
     }
 }
 
-// TODO: this should be a try_from because the input grid could not be a square matrix.
+// TODO: this should be a try_from because the input grid could be a non rectangular matrix.
 impl<V> From<Vec<Vec<Cell<V>>>> for Grid<V> {
     fn from(grid: Vec<Vec<Cell<V>>>) -> Self {
         Grid { grid }
