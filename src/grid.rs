@@ -40,11 +40,7 @@ impl TryFrom<PathBuf> for Grid<char> {
         for line in reader.lines() {
             let mut row: Vec<Cell<char>> = Vec::new();
             for char in line?.as_bytes() {
-                match char {
-                    b'.' => row.push(Cell::Empty(b'.' as char)),
-                    b'*' => row.push(Cell::Bomb),
-                    _ => return Err(Self::Error::new(io::ErrorKind::InvalidData, "Invalid cell")),
-                }
+                row.push(Cell::try_from(*char).map_err(|error| io::Error::new(io::ErrorKind::InvalidInput, error))?);
             }
             grid.push(row);
         }
