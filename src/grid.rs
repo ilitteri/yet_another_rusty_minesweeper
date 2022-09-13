@@ -9,6 +9,7 @@ use std::{
 };
 
 pub struct Grid<V> {
+    // TODO: This should be another generic 'C'
     grid: Vec<Vec<Cell<V>>>,
 }
 
@@ -30,6 +31,7 @@ impl<V: Copy> Grid<V> {
     }
 }
 
+// TODO: Errors should be handled in a better way.
 impl TryFrom<PathBuf> for Grid<char> {
     type Error = io::Error;
 
