@@ -2,7 +2,7 @@ use crate::{cell::Cell, grid::Grid};
 use std::{fmt::Display, io, path::PathBuf};
 
 pub struct Minesweeper {
-    board: Grid<char>,
+    board: Grid<Cell<char>>,
 }
 
 impl Minesweeper {
@@ -11,7 +11,7 @@ impl Minesweeper {
         Ok(Minesweeper { board })
     }
 
-    pub fn revealed(&self) -> Grid<usize> {
+    pub fn revealed(&self) -> Grid<Cell<usize>> {
         let revealed_cells: Vec<Vec<Cell<usize>>> = self
             .board
             .iter()
