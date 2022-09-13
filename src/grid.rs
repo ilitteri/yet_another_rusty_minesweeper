@@ -8,17 +8,16 @@ use std::{
     slice::Iter,
 };
 
-pub struct Grid<V> {
-    // TODO: This should be another generic 'C'
-    grid: Vec<Vec<Cell<V>>>,
+pub struct Grid<C> {
+    grid: Vec<Vec<C>>,
 }
 
-impl<V: Copy> Grid<V> {
-    pub fn iter(&self) -> Iter<Vec<Cell<V>>> {
+impl<C: Copy> Grid<C> {
+    pub fn iter(&self) -> Iter<Vec<C>> {
         self.grid.iter()
     }
 
-    pub fn neighbors(&self, i: usize, j: usize) -> Vec<Cell<V>> {
+    pub fn neighbors(&self, i: usize, j: usize) -> Vec<C> {
         let mut neighbors = Vec::new();
         for x in i.saturating_sub(1)..=i + 1 {
             for y in j.saturating_sub(1)..=j + 1 {
@@ -32,7 +31,7 @@ impl<V: Copy> Grid<V> {
 }
 
 // TODO: Errors should be handled in a better way.
-impl TryFrom<PathBuf> for Grid<char> {
+impl TryFrom<PathBuf> for Grid<Cell<char>> {
     type Error = io::Error;
 
     fn try_from(path: PathBuf) -> Result<Self, Self::Error> {
@@ -56,8 +55,8 @@ impl TryFrom<PathBuf> for Grid<char> {
 }
 
 // TODO: this should be a try_from because the input grid could be a non rectangular matrix.
-impl<V> From<Vec<Vec<Cell<V>>>> for Grid<V> {
-    fn from(grid: Vec<Vec<Cell<V>>>) -> Self {
+impl<C> From<Vec<Vec<C>>> for Grid<C> {
+    fn from(grid: Vec<Vec<C>>) -> Self {
         Grid { grid }
     }
 }
