@@ -12,12 +12,12 @@ impl Minesweeper {
     }
 
     pub fn revealed(&self) -> Grid<usize> {
-        let revealed_cells: Vec<Vec<Cell<usize>>> = self.board
+        let revealed_cells: Vec<Vec<Cell<usize>>> = self
+            .board
             .iter()
             .enumerate()
             .map(|(i, row)| {
-                row
-                    .iter()
+                row.iter()
                     .enumerate()
                     .map(|(j, cell)| match cell {
                         Cell::Bomb => Cell::Bomb,
@@ -30,7 +30,8 @@ impl Minesweeper {
     }
 
     fn close_bombs(&self, i: usize, j: usize) -> usize {
-        self.board.neighbors(i, j)
+        self.board
+            .neighbors(i, j)
             .iter()
             .filter(|cell| matches!(cell, Cell::Bomb))
             .count()

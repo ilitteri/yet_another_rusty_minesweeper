@@ -3,7 +3,9 @@ use std::{
     convert::TryFrom,
     fmt::{Display, Formatter},
     fs::File,
-    io::{self, BufRead, BufReader}, path::PathBuf, slice::Iter,
+    io::{self, BufRead, BufReader},
+    path::PathBuf,
+    slice::Iter,
 };
 
 pub struct Grid<V> {
@@ -12,7 +14,7 @@ pub struct Grid<V> {
 
 impl<V: Copy> Grid<V> {
     pub fn iter(&self) -> Iter<Vec<Cell<V>>> {
-       self.grid.iter() 
+        self.grid.iter()
     }
 
     pub fn neighbors(&self, i: usize, j: usize) -> Vec<Cell<V>> {
@@ -40,7 +42,10 @@ impl TryFrom<PathBuf> for Grid<char> {
         for line in reader.lines() {
             let mut row: Vec<Cell<char>> = Vec::new();
             for char in line?.as_bytes() {
-                row.push(Cell::try_from(*char).map_err(|error| io::Error::new(io::ErrorKind::InvalidInput, error))?);
+                row.push(
+                    Cell::try_from(*char)
+                        .map_err(|error| io::Error::new(io::ErrorKind::InvalidInput, error))?,
+                );
             }
             grid.push(row);
         }
